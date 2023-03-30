@@ -1,0 +1,17 @@
+.navWrapper {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    overflow: hidden;
+    justify-content: flex-end;
+    min-height: 5rem;
+    background-color: bisque;
+    padding-right: 2rem;
+}
+
+.navTagsWrapper {
+    display: flex;
+    height: 100%;
+    gap: 2rem;
+}

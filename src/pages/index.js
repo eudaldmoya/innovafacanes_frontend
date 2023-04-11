@@ -1,12 +1,37 @@
-import Head from 'next/head'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-import Navbar from '../../components/Navbar'
-import HomeCarousel from '../../components/HomeCarousel'
+import Head from "next/head";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
+import Navbar from "../../components/Navbar";
+import HomeCarousel from "../../components/HomeCarousel";
+import { useEffect, useState, Image } from "react";
+import { getCarouselPaths, getReasons } from "../model/getHomeData";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const STRAPI_API_URL = `http://localhost:1337/api/`;
+  const STRAPI_BASE_URL = `http://localhost:1337`;
+  const [reasons, setReasons] = useState(null);
+  const [carousel, setCarousel] = useState(null);
+
+  const loadInfo = async () => {
+    const response = await fetch(`${STRAPI_API_URL}home?populate=*`);
+    const json = await response.json();
+    const data = json.data;
+    console.log(getReasons(data));
+    console.log(getCarouselPaths(data));
+    setReasons(getReasons(data));
+    setCarousel(getCarouselPaths(data));
+    console.log(carousel[0].url);
+  };
+  const r = JSON.stringify(reasons);
+  const c = JSON.stringify(carousel);
+
+  useEffect(() => {
+    loadInfo();
+  }, [r, c]);
+  // 2 objects in JavaScript are equal only if they reference exactly the same object.
+
   return (
     <>
       <Head>
@@ -15,14 +40,30 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <div>
         <Navbar></Navbar>
-      <main className={styles.main}>
-        <section className={styles.homeHeader}>
-          <HomeCarousel></HomeCarousel>
-        </section>
-        <section className={styles.homeReasons}></section>
-        <section className={styles.homePortfolio}></section>
-      </main>
+        <main className={styles.main}>
+          <section className={styles.homeHeader}>
+            <HomeCarousel carousel={carousel}></HomeCarousel>
+            {/* <Image src={`${STRAPI_BASE_URL}${carousel[0].url}`} alt={`${carousel[0].alt}`}></Image> */}
+          </section>
+          <section className={styles.homeReasons}></section>
+          <section className={styles.homePortfolio}></section>
+        </main>
+      </div>
     </>
-  )
+  );
 }
+
+// export async function getServerSideProps(){
+//   const STRAPI_BASE_URL = `http://localhost:1337/`;
+//   const response = await fetch(`${STRAPI_BASE_URL}home?populate=*`);
+//     const json = await response.json();
+//     const data = json.data;
+//     console.log(data);
+//     return {
+//       props: {
+
+//       }
+//     }
+// }

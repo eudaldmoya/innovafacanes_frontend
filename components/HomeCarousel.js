@@ -7,9 +7,9 @@ export default function HomeCarousel (props)  {
     <div>
       {
         
-        props.carousel.map(({ url, alt }, index) => (
-          <Image key={index} src={`${URL}${url}`} alt={alt}/>
-        )) 
+        // props.carousel.map(({ url, alt }, index) => (
+        //   <Image key={index} src={`${URL}${url}`} alt={alt}/>
+        // )) 
       }
     </div>
   )

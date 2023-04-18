@@ -8,30 +8,31 @@ import { getCarouselPaths, getReasons } from "../model/getHomeData";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
-  const STRAPI_API_URL = `http://localhost:1337/api/`;
-  const STRAPI_BASE_URL = `http://localhost:1337`;
-  const [reasons, setReasons] = useState(null);
-  const [carousel, setCarousel] = useState(null);
+export default function Home({carousel, reasons}) {
+  
+  // const STRAPI_BASE_URL = `http://localhost:1337`;
+  // const [reasons, setReasons] = useState(null);
+  // const [carousel, setCarousel] = useState(null);
 
-  const loadInfo = async () => {
-    const response = await fetch(`${STRAPI_API_URL}home?populate=*`);
-    const json = await response.json();
-    const data = json.data;
-    console.log(getReasons(data));
-    console.log(getCarouselPaths(data));
-    setReasons(getReasons(data));
-    setCarousel(getCarouselPaths(data));
-    console.log(carousel[0].url);
-  };
-  const r = JSON.stringify(reasons);
-  const c = JSON.stringify(carousel);
+  // const loadInfo = async () => {
+  //   const STRAPI_API_URL = `http://127.0.0.1:1337/api/`;
+  //   const response = await fetch(`${STRAPI_API_URL}home?populate=*`);
+  //   const json = await response.json();
+  //   const data = json.data;
+  //   console.log(getReasons(data));
+  //   console.log(getCarouselPaths(data));
+  //   setReasons(getReasons(data));
+  //   setCarousel(getCarouselPaths(data));
+  //   console.log(carousel[0].url);
+  // };
+  // const r = JSON.stringify(reasons);
+  // const c = JSON.stringify(carousel);
 
-  useEffect(() => {
-    loadInfo();
-  }, [r, c]);
+  // useEffect(() => {
+  //   loadInfo();
+  // }, [r, c]);
   // 2 objects in JavaScript are equal only if they reference exactly the same object.
-
+console.log(carousel);
   return (
     <>
       <Head>
@@ -55,15 +56,19 @@ export default function Home() {
   );
 }
 
-// export async function getServerSideProps(){
-//   const STRAPI_BASE_URL = `http://localhost:1337/`;
-//   const response = await fetch(`${STRAPI_BASE_URL}home?populate=*`);
-//     const json = await response.json();
-//     const data = json.data;
-//     console.log(data);
-//     return {
-//       props: {
+export async function getStaticProps(){
 
-//       }
-//     }
-// }
+  const STRAPI_BASE_URL = `http://127.0.0.1:1337/api/`;
+  const response = await fetch(`${STRAPI_BASE_URL}home?populate=*`);
+    const json = await response.json();
+    const data = json.data;
+    console.log(data);
+    const reasons = getReasons(data);
+    const carousel = getCarouselPaths(data);
+    return {
+      props: {
+        reasons,
+        carousel,
+      }
+    }
+}

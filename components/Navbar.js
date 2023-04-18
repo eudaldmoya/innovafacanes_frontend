@@ -6,16 +6,16 @@ export default function Navbar() {
     <div className={styles.navWrapper}>
       <nav>
         <div className={styles.navTagsWrapper}>
-          <Link href="/serveis" target="_blank" rel="noopener noreferrer">
+          <Link href="/serveis"  rel="noopener noreferrer">
             Serveis
           </Link>
-          <Link href="/projectes" target="_blank" rel="noopener noreferrer">
+          <Link href="/projectes" rel="noopener noreferrer">
             Projectes
           </Link>
-          <Link href="/nosaltres" target="_blank" rel="noopener noreferrer">
+          <Link href="/nosaltres" rel="noopener noreferrer">
             Nosaltres
           </Link>
-          <Link href="/contacte" target="_blank" rel="noopener noreferrer">
+          <Link href="/contacte" rel="noopener noreferrer">
             Contacte
           </Link>
           
